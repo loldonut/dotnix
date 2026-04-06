@@ -151,5 +151,6 @@
     flatpak
     vlc
     firefox
+    discord
   ];
 }

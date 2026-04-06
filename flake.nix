@@ -19,23 +19,23 @@
       system = "x86_64-linux";
       specialArgs = { inherit inputs; };
       modules = [
-          ./configuration.nix
-	  ./noctalia.nix
+        ./configuration.nix
+          ./noctalia.nix
           home-manager.nixosModules.home-manager
-          # Chosen from here : https://github.com/NixOS/nixos-hardware/blob/master/flake.nix
+# Chosen from here : https://github.com/NixOS/nixos-hardware/blob/master/flake.nix
           nixos-hardware.nixosModules.lenovo-thinkpad-t490
-	  {
-	    nixpkgs.config.allowUnfree = true;
-	  }
           {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-      	      extraSpecialArgs = { inherit inputs; };
-	      users.ric = import ./home.nix;
-              backupFileExtension = "backup";
-            };
+            nixpkgs.config.allowUnfree = true;
           }
+      {
+        home-manager = {
+          useGlobalPkgs = true;
+          useUserPackages = true;
+          extraSpecialArgs = { inherit inputs; };
+          users.ric = import ./home.nix;
+          backupFileExtension = "backup";
+        };
+      }
       ];
     };
   };
