@@ -1,4 +1,10 @@
-{ inputs, config, pkgs, ... }: {
+{
+  inputs,
+  config,
+  pkgs,
+  ...
+}:
+{
   home.username = "ric";
   home.homeDirectory = "/home/ric";
   home.stateVersion = "25.11";
@@ -38,7 +44,6 @@
         exec ~/.sessionize
       fi
     '';
-
 
     oh-my-zsh = {
       enable = true;
@@ -152,5 +157,6 @@
     vlc
     firefox
     discord
+    nixfmt
   ];
 }

@@ -1,4 +1,6 @@
-{ pkgs ? import <nixpkgs> { }, }:
+{
+  pkgs ? import <nixpkgs> { },
+}:
 let
   overrides = (builtins.fromTOML (builtins.readFile ./rust-toolchain.toml));
 in
@@ -23,9 +25,8 @@ pkgs.callPackage (
       rust-analyzer
     ];
     # libraries here
-    buildInputs =
-      [
-      ];
+    buildInputs = [
+    ];
     RUSTC_VERSION = overrides.toolchain.channel;
     RUST_SRC_PATH = "${rustPlatform.rustLibSrc}";
     # https://github.com/rust-lang/rust-bindgen#environment-variables

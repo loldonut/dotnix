@@ -1,10 +1,18 @@
-{ inputs, config, lib, pkgs, ... }: let
+{
+  inputs,
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+let
   pkgs-unstable = inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
-in {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+in
+{
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
   # Boot Loader
   boot.loader.systemd-boot.enable = false;
@@ -49,7 +57,10 @@ in {
 
   users.users.ric = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [
+      "wheel"
+      "networkmanager"
+    ]; # Enable ‘sudo’ for the user.
     packages = with pkgs; [
       tree
     ];
@@ -61,7 +72,8 @@ in {
     enable = true;
     withUWSM = true;
     package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
-    portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
+    portalPackage =
+      inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
     xwayland.enable = true;
   };
 
@@ -79,9 +91,9 @@ in {
   };
 
   hardware.graphics = {
-   package = pkgs-unstable.mesa;
-   enable32Bit = true;
-   package32 = pkgs-unstable.pkgsi686Linux.mesa;
+    package = pkgs-unstable.mesa;
+    enable32Bit = true;
+    package32 = pkgs-unstable.pkgsi686Linux.mesa;
   };
 
   services.power-profiles-daemon.enable = true;
@@ -177,7 +189,10 @@ in {
     noto-fonts-color-emoji
   ];
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   services.openssh.enable = true;
   services.flatpak.enable = true;
@@ -221,11 +236,23 @@ in {
   };
   networking.firewall = {
     enable = true;
-    allowedTCPPorts = [ 80 443 ];
+    allowedTCPPorts = [
+      80
+      443
+    ];
     allowedUDPPortRanges = [
-      { from = 4000; to = 4007; }
-      { from = 8000; to = 8010; }
-      { from = 27005; to = 27030; }
+      {
+        from = 4000;
+        to = 4007;
+      }
+      {
+        from = 8000;
+        to = 8010;
+      }
+      {
+        from = 27005;
+        to = 27030;
+      }
     ];
     extraPackages = with pkgs; [
       ipset
