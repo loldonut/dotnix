@@ -32,6 +32,8 @@
     };
 
     initContent = ''
+      export NIX_LD=$(nix eval --impure --raw --expr 'let pkgs = import <nixpkgs> {}; NIX_LD = pkgs.lib.fileContents "${pkgs.stdenv.cc}/nix-support/dynamic-linker"; in NIX_LD')
+
       eval "$(zoxide init --cmd cd zsh)"
       eval "$(fzf --zsh)"
 
@@ -153,10 +155,16 @@
   home.packages = with pkgs; [
     tmux
     ripgrep
+    nixfmt
     flatpak
-    vlc
+
     firefox
     discord
-    nixfmt
+
+    btop
+
+    # Multimedia
+    amberol
+    vlc
   ];
 }
