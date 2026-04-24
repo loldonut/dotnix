@@ -33,7 +33,7 @@
           # Chosen from here : https://github.com/NixOS/nixos-hardware/blob/master/flake.nix
           nixos-hardware.nixosModules.lenovo-thinkpad-t490
           {
-            nixpkgs.config.allowUnfree = true;
+            nixpkgs.config.allowUnfreePredicate = _: true;
           }
           {
             home-manager = {
