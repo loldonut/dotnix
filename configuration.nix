@@ -51,7 +51,8 @@ in
             8.12.16.195, 45.67.86.40, 2.58.201.66, 151.158.198.49, 202.184.101.60,
             43.143.87.158, 104.149.151.170, 202.186.169.46, 110.42.9.24, 103.40.13.58,
             180.188.24.50, 210.16.171.17, 202.189.15.5, 43.249.194.250, 160.202.231.31,
-            113.68.24.38, 124.222.49.178, 74.91.124.246, 164.132.201.202
+            113.68.24.38, 124.222.49.178, 74.91.124.246, 164.132.201.202, 159.75.77.193,
+            58.153.161.130, 46.174.51.126, 202.184.47.51, 202.184.47.139
           }
         }
 
@@ -229,7 +230,27 @@ in
     # Formatting
     gparted
     exfatprogs
+    ntfs3g
+
+    # Compression Programs
+    zip
+    unzip
   ];
+
+  # AppImages
+  programs.appimage.enable = true;
+  programs.appimage.binfmt = true;
+  programs.appimage.package = pkgs.appimage-run.override
+  {
+    extraPkgs = pkgs:
+      [
+      pkgs.icu
+        pkgs.libxcrypt-legacy
+        pkgs.python312
+        pkgs.python312Packages.torch
+        pkgs.webkitgtk_4_1
+      ];
+  };
 
   fonts.packages = with pkgs; [
     nerd-fonts.jetbrains-mono
