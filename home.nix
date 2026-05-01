@@ -159,6 +159,7 @@
     flatpak
 
     firefox
+    mangohud
     discord
 
     btop

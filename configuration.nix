@@ -52,7 +52,7 @@ in
             43.143.87.158, 104.149.151.170, 202.186.169.46, 110.42.9.24, 103.40.13.58,
             180.188.24.50, 210.16.171.17, 202.189.15.5, 43.249.194.250, 160.202.231.31,
             113.68.24.38, 124.222.49.178, 74.91.124.246, 164.132.201.202, 159.75.77.193,
-            58.153.161.130, 46.174.51.126, 202.184.47.51, 202.184.47.139
+            58.153.161.130, 46.174.51.126, 202.184.47.51, 202.184.47.139, 120.77.206.2
           }
         }
 
@@ -96,6 +96,9 @@ in
   # Set your time zone.
   time.timeZone = "Asia/Manila";
   i18n.defaultLocale = "en_US.UTF-8";
+
+  # intel stuff
+  services.thermald.enable = true;
 
   services.power-profiles-daemon.enable = true;
   services.upower.enable = true;
@@ -147,23 +150,39 @@ in
     shell = pkgs.zsh;
   };
 
-  hardware = {
-    graphics = {
+  services.xserver.videoDrivers = [ "modesetting" ];
+  hardware.graphics = {
       enable = true;
       enable32Bit = true;
       package = pkgs-unstable.mesa;
       package32 = pkgs-unstable.pkgsi686Linux.mesa;
-    };
+      extraPackages = with pkgs; [
+        intel-vaapi-driver
+        intel-media-driver
+      ];
+  };
+
+  hardware = {
     bluetooth.enable = true;
   };
 
   environment.sessionVariables = {
+    LIBRA_DRIVER_NAME = "iHD";
     WLR_NO_HARDWARE_CURSORS = "1";
     NIXOS_OZONE_WL = "1";
   };
   environment.variables = {
     EDITOR = "nvim";
   };
+
+  # Steam
+  programs.steam = {
+    enable = true;
+    gamescopeSession.enable = true;
+    remotePlay.openFirewall = true;
+    dedicatedServer.openFirewall = true;
+  };
+  programs.gamemode.enable = true;
 
   # List packages installed in system profile.
   # You can use https://search.nixos.org/ to find more packages (and options).
@@ -227,6 +246,10 @@ in
     htop
     ncdu
 
+    # Game Tinkerers/Launchers
+    lutris
+    mangohud
+
     # Formatting
     gparted
     exfatprogs
@@ -265,10 +288,19 @@ in
   };
   programs.zsh.enable = true;
 
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
+  nix.settings = {
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
+    auto-optimise-store = true;
+  };
+
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 7d";
+  };
 
   system.stateVersion = "25.11";
 }
