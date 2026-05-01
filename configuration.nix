@@ -88,6 +88,7 @@ in
         to = 27030;
       }
     ];
+    trustedInterfaces = [ "virbr0" ];
     extraPackages = with pkgs; [
       ipset
     ];
@@ -143,6 +144,7 @@ in
     extraGroups = [
       "wheel"
       "networkmanager"
+      "libvirtd"
     ]; # Enable ‘sudo’ for the user.
     packages = with pkgs; [
       tree
@@ -184,6 +186,10 @@ in
   };
   programs.gamemode.enable = true;
 
+  # Virt-Manager
+  virtualisation.libvirtd.enable = true;
+  programs.virt-manager.enable = true;
+
   # List packages installed in system profile.
   # You can use https://search.nixos.org/ to find more packages (and options).
   nixpkgs.config.allowUnfree = true;
@@ -204,6 +210,7 @@ in
     networkmanagerapplet
     ipset
     nmap
+    dnsmasq
 
     ## Hyprland related packages
     hyprpolkitagent
