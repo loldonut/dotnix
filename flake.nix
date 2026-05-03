@@ -34,6 +34,14 @@
           nixos-hardware.nixosModules.lenovo-thinkpad-t490
           {
             nixpkgs.config.allowUnfreePredicate = _: true;
+            # Temporary solution to an OpenLDAP error when compiling to x86_64-linux
+            nixpkgs.overlays = [
+              (_: prev: {
+                openldap = prev.openldap.overrideAttrs {
+                  doCheck = !prev.stdenv.hostPlatform.isi686;
+                };
+              })
+            ];
           }
           {
             home-manager = {
