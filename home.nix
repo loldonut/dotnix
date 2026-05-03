@@ -1,6 +1,7 @@
 {
-  inputs,
   config,
+  inputs,
+  lib,
   pkgs,
   ...
 }:
@@ -25,11 +26,18 @@
 
   programs.neovim = {
     enable = true;
+    withPython3 = false;
+    withRuby = false;
+    withNodeJs = false;
+    withPerl = false;
     defaultEditor = true;
     plugins = with pkgs.vimPlugins; [
       telescope-fzf-native-nvim
     ];
   };
+
+  # Force home manager to not clobber with the 'init.lua' file
+  xdg.configFile."nvim/init.lua".enable = lib.mkForce false;
 
   home.pointerCursor = {
     gtk.enable = true;
