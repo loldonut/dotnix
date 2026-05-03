@@ -65,20 +65,23 @@
     };
   };
 
+  home.sessionPath = [ "$HOME/bin" ];
+
   # Swaync for Notifications
   services.swaync.enable = true;
 
   home.packages = with pkgs; [
     tmux
-    ripgrep
+
+    # CLI Apps
     nixfmt
     flatpak
+    ripgrep
+    btop
 
     firefox
     mangohud
     discord
-
-    btop
 
     # Multimedia
     amberol
