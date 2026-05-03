@@ -45,6 +45,7 @@ in
     # Display and Desktop
     services.desktopManager.gnome.enable = true;
     services.displayManager.gdm.enable = true;
+    programs.dconf.enable = true;
     ## Hyprland
     programs.hyprland = {
       enable = true;
@@ -149,8 +150,10 @@ in
       hyprpaper
       hyprshot
       hyprcursor
+      hyprshutdown
       rofi
       wl-clipboard
+      wayle
 
       # Wallpaper
       waypaper
