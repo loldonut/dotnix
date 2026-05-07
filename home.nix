@@ -31,8 +31,11 @@
     withNodeJs = false;
     withPerl = false;
     defaultEditor = true;
-    plugins = with pkgs.vimPlugins; [
-      telescope-fzf-native-nvim
+    plugins = with pkgs; [
+      vimPlugins.telescope-fzf-native-nvim
+      vimPlugins.nvim-treesitter.withAllGrammars
+      fd
+      lazygit
     ];
   };
 
@@ -65,7 +68,10 @@
     };
   };
 
-  home.sessionPath = [ "$HOME/bin" ];
+  home.sessionPath = [
+    "$HOME/bin"
+    "$HOME/.local/share/nvim/mason/bin"
+  ];
 
   # Swaync for Notifications
   services.swaync.enable = true;
